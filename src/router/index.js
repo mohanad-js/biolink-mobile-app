@@ -26,6 +26,11 @@ const router = createRouter({
           component: () => import('../views/Profile/TransactionsHistoryView.vue')
         },
         {
+          path: '/profile/edit-profile/:id',
+          name: 'edit-profile',
+          component: () => import('../views/Profile/EditProfileView.vue')
+        },
+        {
           path: '/store',
           name: 'store',
           component: () => import('../views/Store/StoreView.vue')
