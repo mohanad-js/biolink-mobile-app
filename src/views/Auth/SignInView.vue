@@ -63,12 +63,4 @@ const authStore = useAuthStore()
 
 </template>
 
-<style lang="postcss" scoped></style>
-
-
-
-<!-- Js Dependencies -->
-<!-- <script src="@/assets/js/plugins/bootstrap.js"></script>
-    <script src="@/assets/js/main.js"></script>
-    <script src="@/assets/js/service-worker-settings.js"></script>
- -->
+<style scoped></style>
