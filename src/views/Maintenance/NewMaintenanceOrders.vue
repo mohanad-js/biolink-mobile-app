@@ -1,17 +1,15 @@
-<script setup>
-import router from '@/router';
+<script setup >
 import { useMaintenanceStore } from '@/stores/maintenance';
-import {storeToRefs} from 'pinia'
+import { storeToRefs } from 'pinia';
 import MaintenanceOrderCard from '@/components/MaintenanceOrderCard.vue';
-
+import router from '@/router';
 const store = useMaintenanceStore()
-const {activeMaintenanceOrders} = storeToRefs(store)
 
+const {getNewMaintenanceOrders} = storeToRefs(store)
 
 </script>
 
 <template>
-
     <main class="h-100 px-5 pb-200">
         <div class="gender-button">
 
@@ -21,7 +19,7 @@ const {activeMaintenanceOrders} = storeToRefs(store)
         </div>
 
 
-        <MaintenanceOrderCard v-for="order in activeMaintenanceOrders" :key="order.id" :order="order" />
+        <MaintenanceOrderCard v-for="order in getNewMaintenanceOrders" :key="order.id" :order="order" />
         
     </main>
 </template>

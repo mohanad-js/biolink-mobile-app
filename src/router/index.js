@@ -65,6 +65,16 @@ const router = createRouter({
               component: () => import('../views/Maintenance/CompletedMaintenancesView.vue')
             },
             {
+              path:'/maintenances/new',
+              name: 'new orders',
+              component: () => import('../views/Maintenance/NewMaintenanceOrders.vue')
+            },
+            {
+              path:'/maintenances/canceled',
+              name: 'canceled orders',
+              component: () => import('../views/Maintenance/CanceledMaintenanceOrders.vue')
+            },
+            {
               path: '/maintenances/active',
               name: 'active orders',
               component: () => import('../views/Maintenance/ActiveMaintenancesOrdersView.vue')
@@ -82,7 +92,13 @@ const router = createRouter({
           component: () => import('../views/Maintenance/MaintenanceOrderDetails.vue')
         },
         {
-          path:'/maintenances/new',
+          path: '/maintenances/order/:id/update',
+          props: true,
+          name: 'update maintenance order',
+          component: () => import('../views/Maintenance/UpdateMaintenanceOrder.vue')
+        },
+        {
+          path:'/maintenances/order/new',
           name:'new maintenance order',
           component: ()=> import('../views/Maintenance/NewMaintenanceOrder.vue')
         }

@@ -1,16 +1,22 @@
 <script setup>
 import SubHeader from '@/components/SubHeader.vue';
 import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { getMaintenanceOrderDetails } from '@/api/maintenanceApiCalls';
+import { useRoute, useRouter } from 'vue-router';
+import { getMaintenanceOrderDetails, cancelMaintenanceOrder } from '@/api/maintenanceApiCalls';
 import { useLoading } from 'vue-loading-overlay';
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css';
+import BaseButton from '@/components/Base/BaseButton.vue';
 
+import BaseAlertModal from '@/components/Base/BaseAlertModal.vue';
+
+const router = useRouter()
 const route = useRoute()
 const order = ref({})
+
+const showCancelModal = ref(false)
 
 const loader = useLoading({
     opacity: 0.5,
@@ -27,8 +33,19 @@ const fetchOrder = () => {
 
 }
 
-watch(() => route.params.id, () => { fetchOrder() }, { immediate: true })
 
+const cancelOrder = () => {
+    let _loader = loader.show()
+
+    cancelMaintenanceOrder(route.params.id, { status: 'canceled' }).then().finally(() => {
+        _loader.hide()
+        showCancelModal.value = false
+        router.go()
+
+    })
+}
+
+watch(() => route.params.id, () => { fetchOrder() }, { immediate: true })
 
 const baseUrl = 'http://192.168.1.80:5008'
 </script>
@@ -117,7 +134,7 @@ const baseUrl = 'http://192.168.1.80:5008'
                         </div>
                     </div>
 
-                    <div class="d-flex align-items-end" v-if="order.maintenance_order_details?.complete_time" >
+                    <div class="d-flex align-items-end" v-if="order.maintenance_order_details?.complete_time">
                         <div class="me-3">
                             <i class="ph-bold ph-check-circle"></i>
                         </div>
@@ -131,7 +148,7 @@ const baseUrl = 'http://192.168.1.80:5008'
                             <i class="ph-bold ph-money"></i>
                         </div>
                         <div>
-                            <span>Maintenance Cost <strong>{{ order.maintenance_price }}</strong>  </span>
+                            <span>Maintenance Cost <strong>{{ order.maintenance_price }}</strong> </span>
                             <i class="ph-bold ph-dot-outline ph-bold fs-4"></i>
                             <span>Scan Fees <strong>{{ order.scan_fees }}</strong></span>
                         </div>
@@ -139,10 +156,11 @@ const baseUrl = 'http://192.168.1.80:5008'
                 </div>
             </div>
 
-            <div class="w-100 base-card p-4 mb-4"  v-if="order.maintenance_order_details">
+            <div class="w-100 base-card p-4 mb-4" v-if="order.maintenance_order_details">
                 <h5 class="card-header">Technical Details</h5>
                 <hr />
-                <div v-if="order?.maintenance_order_spare_parts?.length > 0"  class="d-flex justify-content-between align-items-start gap-4 flex-column mt-3">
+                <div v-if="order?.maintenance_order_spare_parts?.length > 0"
+                    class="d-flex justify-content-between align-items-start gap-4 flex-column mt-3">
                     <p class="fs-5">Spare Parts</p>
 
                     <div class="d-flex align-items-end" v-for="spare_part in order.maintenance_order_spare_parts">
@@ -166,16 +184,16 @@ const baseUrl = 'http://192.168.1.80:5008'
                 <div class="d-flex justify-content-between align-items-start gap-4 flex-column mt-3">
 
                     <div class="d-flex align-items-end"
-                    v-if="order.maintenance_order_details?.estimated_maintenance_time">
-                    <div class="me-3">
-                        <i class="ph-bold ph-clock-countdown"></i>
-                    </div>
-                    
-                    <div>
-                        <span>Estimated time <strong>{{ order.maintenance_order_details.estimated_maintenance_time
+                        v-if="order.maintenance_order_details?.estimated_maintenance_time">
+                        <div class="me-3">
+                            <i class="ph-bold ph-clock-countdown"></i>
+                        </div>
+
+                        <div>
+                            <span>Estimated time <strong>{{ order.maintenance_order_details.estimated_maintenance_time
                                     }} </strong></span>
                         </div>
-                        
+
                     </div>
 
                     <div class="d-flex align-items-end" v-if="order.maintenance_order_details?.engineer">
@@ -184,13 +202,13 @@ const baseUrl = 'http://192.168.1.80:5008'
                         </div>
 
                         <div>
-                           Engineer <strong>{{ order.maintenance_order_details?.engineer?.name }}</strong>
+                            Engineer <strong>{{ order.maintenance_order_details?.engineer?.name }}</strong>
                         </div>
 
 
                     </div>
 
-                    </div>
+                </div>
             </div>
 
 
@@ -222,25 +240,42 @@ const baseUrl = 'http://192.168.1.80:5008'
             </div>
 
 
-            <div v-if="order.status !== 'completed'" class="d-flex justify-content-between align-items-center pt-4 gap-3 appointment-link-buttons">
-                <button  :disabled="order.status !== 'new' && order.status !== 'examined'" class=" btn btn-danger fill d-block w-100 ">
+            <div v-if="order.status !== 'completed'"
+                class="d-flex justify-content-between align-items-center pt-4 gap-3 appointment-link-buttons">
+                <button @click="() => showCancelModal = !showCancelModal"
+                    :disabled="order.status !== 'new' && order.status !== 'examined'"
+                    class=" btn btn-danger fill d-block w-100 ">
                     Cancel Order
                 </button>
             </div>
 
-            <div  v-if="order.status === 'examined'" class="d-flex justify-content-between align-items-center pt-4 gap-3 appointment-link-buttons">
-                <button  class=" btn btn-success fill d-block w-100 ">
+            <div v-if="order.status === 'examined'"
+                class="d-flex justify-content-between align-items-center pt-4 gap-3 appointment-link-buttons">
+                <button class=" btn btn-success fill d-block w-100 ">
                     Approve Maintenance
                 </button>
             </div>
 
-            <div  v-if="order.status === 'new'" class="d-flex justify-content-between align-items-center pt-4 gap-3 appointment-link-buttons">
-                <button class=" btn btn-primary fill d-block w-100 ">
+            <div v-if="order.status === 'new'"
+                class="d-flex justify-content-between align-items-center pt-4 gap-3 appointment-link-buttons">
+                <button @click="router.push({ name: 'update maintenance order', params: { id: order.id } })"
+                    class=" btn btn-primary fill d-block w-100 ">
                     Update Order
                 </button>
             </div>
 
         </div>
+
+        <BaseAlertModal title="Cancel Order" message="Are you sure you want to cancel this order?"
+            v-model:visible="showCancelModal">
+            <template #button>
+                <div class="gender-button">
+
+                    <BaseButton styles="btn btn-danger" title="Cancel Order" @click="cancelOrder" />
+                </div>
+            </template>
+        </BaseAlertModal>
+
 
     </main>
 </template>

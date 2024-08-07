@@ -2,7 +2,6 @@
 const props = defineProps({
     action: {
         type: Function,
-        default: () => console.log('hello world')
     },
     styles: {
         type: String,
@@ -17,7 +16,7 @@ console.log(props)
 </script>
 
 <template>
-    <button @click="action" :class="`appointment-link  d-block w-100 logoutModalButton ${styles}`">
+    <button @click="action" :class="`btn  btn-secondary  d-block w-100 ${styles}`">
         {{ title }}
     </button>
 </template>

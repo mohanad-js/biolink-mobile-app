@@ -54,7 +54,7 @@ router.push({ name: 'active orders' })
         </section>
         <!-- Search Section End -->
         <TabTitle
-            :tabs="[{ title: 'Active Orders', link: '/maintenances/active' }, { title: 'Completed', link: '/maintenances/completed' }]" />
+            :tabs="[{title:'New Orders',link:'/maintenances/new'},{ title: 'Active Orders', link: '/maintenances/active' }, { title: 'Completed', link: '/maintenances/completed' },{title:'Canceled',link:'/maintenances/canceled'}]" />
         <div class="tab-content activeTab" id="upcoming_data">
 
             <RouterView />
