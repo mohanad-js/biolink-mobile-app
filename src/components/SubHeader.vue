@@ -1,14 +1,9 @@
 <script setup>
-const props = ({
-    title: {
-        type: "string",
-    },
-    link: {
-        type: "string",
-    },
-})
+const props = defineProps([
+  'title','link'
+])
 
-console.log(props.link)
+console.log(props)
 </script>
 
 <template>
