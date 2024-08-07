@@ -1,5 +1,10 @@
 <script setup>
 
+import { useAuthStore } from '@/stores/auth';
+const authStore = useAuthStore()
+
+
+
 </script>
 
 <template>
@@ -28,7 +33,7 @@
         <div class="d-flex flex-column gap-8">
           <router-link to="/forget-password" class="d-block text-end fw-semibold">Forgot Password?</router-link>
 
-          <router-link to="/home" class="link-button d-block">Sign In</router-link>
+          <button @click="authStore.login('email', 'password')" class="link-button d-block">Sign In</button>
         </div>
 
         <div class="position-relative continue-with">

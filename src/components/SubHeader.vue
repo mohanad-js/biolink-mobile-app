@@ -1,10 +1,10 @@
 <script setup>
-const props = ({
+const props = defineProps({
     title: {
-        type: "string",
+        type: String,
     },
     link: {
-        type: "string",
+        type: String,
     },
 })
 
