@@ -8,16 +8,13 @@ import { createMaintenanceOrder } from '@/api/maintenanceApiCalls'
 import { useLoading } from 'vue-loading-overlay';
 
 
-const device = ref('')
-const model = ref('')
-const location = ref('')
-const description = ref('')
+const imagesPreview = ref([])
 
 const { addMaintenanceOrder } = useMaintenanceStore()
 
 defineRule('required', required)
 defineRule('filesLimit', (value) => {
-    if (value.length <= 4) {
+    if (value?.length <= 4) {
         return true
     }
 
@@ -29,13 +26,6 @@ let loader = useLoading({
     color: "#198754",
 });
 
-
-
-let _r = loader.show()
-
-setTimeout(() => {
-    _r.hide()
-}, 3000)
 
 
 const submitOrder = (values) => {
@@ -60,9 +50,14 @@ const submitOrder = (values) => {
         _loader.hide()
 
     })
+}
 
-
-
+const onFileChange = (e) => {
+    imagesPreview.value = []
+    const files = e.target.files
+    for (let i = 0; i < files.length; i++) {
+        imagesPreview.value.push({id:i,src:URL.createObjectURL(files[i])})
+    }
 }
 
 
@@ -137,13 +132,16 @@ const submitOrder = (values) => {
                 <div class="">
                     <div class="search-area d-flex justify-content-between align-items-center gap-2 w-100 mb-1">
                         <div class="search-box d-flex justify-content-start align-items-center gap-2 p-3 w-100">
-                            <Field accept="image/*" type="file" multiple placeholder="Device Model" name="images"
-                                rules="required|filesLimit" />
+                            <Field placeholder="Device Model" name="images" rules="filesLimit|required" v-slot="{handleChange}">
+                                    <input accept="image/*" type="file" multiple  @change="(e)=>{handleChange(e); onFileChange(e)}"/>
+                                </Field>
                         </div>
                     </div>
                     <ErrorMessage name="images" class=" text-danger" />
 
                 </div>
+
+                    <img v-for="image in imagesPreview" :key="image.id" :src="image.src" width="100" height="auto" />
             </section>
 
             <section class="search-section w-100 px-6 pt-5">
