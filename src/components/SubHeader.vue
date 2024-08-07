@@ -1,9 +1,11 @@
 <script setup>
+import { useRoute } from 'vue-router';
+
 const props = defineProps([
   'title','link'
 ])
 
-console.log(props)
+const route = useRoute()
 </script>
 
 <template>
@@ -12,7 +14,7 @@ console.log(props)
             <router-link :to="link" class="back-button flex-center">
                 <i class="ph ph-caret-left"></i>
             </router-link>
-            <h2>{{ title }}</h2>
+            <h2>{{ route.name }}</h2>
         </div>
     </section>
 </template>
