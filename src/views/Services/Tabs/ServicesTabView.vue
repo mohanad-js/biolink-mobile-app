@@ -2,9 +2,9 @@
 import BaseCard from '@/components/Base/BaseCard.vue';
 import { ref } from 'vue';
 const services = ref([
-    { header: 'service one', text: "text" },
-    { header: 'service one', text: "text" },
-    { header: 'service one', text: "text" }
+    { name: 'X-ray', center: "Kassala", price:"100", duration:'60 Min'},
+    { name: 'Sound waves', center: "Portsudan", price:"200", duration:'20 Min'},
+    { name: 'X-ray', center: "Qadarif", price:"100", duration:'50 Min' }
 ])
 </script>
 

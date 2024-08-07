@@ -15,13 +15,13 @@
         <div class="input-field-item">
           <p>Email</p>
           <div class="input-field">
-            <input type="text" class="" placeholder="Email" />
+            <input type="text" class="" v-model="user" placeholder="Email" />
           </div>
         </div>
         <div class="input-field-item">
           <p>Password</p>
           <div class="d-flex justify-content-between align-items-center input-field">
-            <input type="password" class="" placeholder="******" />
+            <input type="password" class="" v-model="pass" placeholder="******" />
             <i class="ph ph-eye-closed"></i>
           </div>
         </div>
@@ -58,12 +58,4 @@
 
 </template>
 
-<style lang="postcss" scoped></style>
-
-
-
-<!-- Js Dependencies -->
-<!-- <script src="@/assets/js/plugins/bootstrap.js"></script>
-    <script src="@/assets/js/main.js"></script>
-    <script src="@/assets/js/service-worker-settings.js"></script>
- -->
+<style scoped></style>

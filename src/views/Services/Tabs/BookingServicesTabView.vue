@@ -1,7 +1,17 @@
-<script lang="ts" setup>
-
+<script setup>
+import BaseCard from '@/components/Base/BaseCard.vue';
+import { ref } from 'vue';
+const services = ref([
+    { name: 'X-ray', center: "Kassala", price:"100", duration:'60 Min', state:'' },
+    { name: 'Sound waves', center: "Portsudan", price:"200", duration:'20 Min'},
+    { name: 'X-ray', center: "Qadarif", price:"100", duration:'50 Min' }
+])
 </script>
 
 <template>
-    <h1>Booking services</h1>
+    <main>
+        <div class="tab-content activeTab" id="upcoming_data">
+            <BaseCard v-for="service in services" :card="service" :key="service" :cancelButton="true"/>
+        </div>
+    </main>
 </template>

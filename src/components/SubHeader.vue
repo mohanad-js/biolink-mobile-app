@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router';
 
 const props = defineProps([
-  'title','link'
+    'title', 'link'
 ])
 
 const route = useRoute()

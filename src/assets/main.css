@@ -1,3 +1,8 @@
 @import './css/plugins/swiper.min.css';
 @import './css/plugins/bootstrap.min.css';
 @import './css/style.css';
+
+
+.primary-text-color {
+    color:  var(--p1) !important;
+}
