@@ -59,3 +59,9 @@ console.log(props.card)
     </div>
 
 </template>
+<style scoped>
+.base-card {
+    border-radius: 20px;
+    border: 1px solid var(--borderColor);
+}
+</style>
