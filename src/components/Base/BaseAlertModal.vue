@@ -13,6 +13,13 @@ export default {
             type: String,
             default: 'Are you sure you want to Confirm?',
         },
+        action: {
+            type: Object,
+            default: {
+                confirm: () => console.log('Confirm'),
+                label: 'Confirm',
+            },
+        }
 
     },
     methods: {
@@ -39,9 +46,9 @@ export default {
                     <div class="gender-button" @click="closeModal">
                         <button>Cancel</button>
                     </div>
-                    <slot name="actions">
-
-                    </slot>
+                    <button @click="action.confirm" class="gender-button active" id="logoutButton">
+                        <span>{{ action.label }}</span>
+                    </button>
                 </div>
             </div>
         </div>
