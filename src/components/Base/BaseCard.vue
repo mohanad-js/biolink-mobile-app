@@ -4,11 +4,16 @@ const props = defineProps({
         type: Object,
         required: true
     },
+    cancelButton: {
+        type: Boolean ,
+        required: false,
+        default: false
+    },
     styles: {
         type: String,
     },
 })
-console.log(props)
+console.log('test',props)
 </script>
 
 <template>
@@ -20,20 +25,21 @@ console.log(props)
                         <img src="@/assets/img/top-doctor-4.png" class="h-100" alt="" />
                     </div>
                     <div class="">
-                        <p class="fw-bold name">Dr. Marvin McKinney</p>
+                        <p class="fw-bold name">{{ card.name }}</p>
+                        <p class="name">state: Not approve</p>
                         <p class="d-inline-flex justify-content-start align-items-center py-2 flex-wrap">
-                            <span class="category">Cardiologist </span>
+                            <span class="category">{{card.center}} </span>
                             <i class="ph ph-dot fs-4"></i>
-                            <span class="work-place">Franklin Hospital</span>
+                            <span class="work-place">{{card.price}}K SDG</span>
                         </p>
                         <div class="d-flex justify-content-start align-items-center flex-wrap">
-                            <div class="rating">
+                            <!-- <div class="rating">
                                 <i class="ph-fill ph-star"></i>
                                 4.7
-                            </div>
-                            <i class="ph ph-dot fs-2"></i>
+                            </div> -->
+                            <!-- <i class="ph ph-dot fs-2"></i> -->
                             <div class="time">
-                                <i class="ph-fill ph-clock"></i>12pm-5pm
+                                <i class="ph-fill ph-clock"></i>{{card.duration}}
                             </div>
                         </div>
                     </div>
@@ -43,8 +49,9 @@ console.log(props)
                 </button>
             </div>
             <div class="d-flex justify-content-between align-items-center pt-4 gap-3 appointment-link-buttons">
-                <a href="./chat-box.html" class="appointment-link d-block w-100">Appointment</a>
-                <button class="appointment-link fill d-block w-100 logoutModalButton">
+                <a v-if="cancelButton" href="/services/services-profile" class="appointment-link d-block w-100">{{!cancelButton?'Appointment':'Details'}}</a>
+                <a v-if="!cancelButton" href="" class="appointment-link d-block w-100">{{!cancelButton?'Appointment':'Details'}}</a>
+                <button v-if="cancelButton" class="appointment-link fill d-block w-100 logoutModalButton">
                     Cancel
                 </button>
             </div>

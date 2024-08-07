@@ -1,5 +1,34 @@
-<script setup>
+<script>
+ export default {
+  methods: {
+    data() {
+      return {
+        user:'moaid',
+        pass:'1234'
+      }
+    },
+    signIn(user,pass){
+      if(this.user=='moaid' && pass=='1234'){
+        this.$router.push('/home')
+      }else{
+        console.warn("Rong pass");
+      }
+      // app.name=user
+      // app.pass=pass
+      // this.http.post("/login", app).then((res) => {  
+      //   console.log(res)   
+      //   if(res)
+      //   this.$router.push('/home')    
+      //   this.get(this.page);
+      // });
+      //console.log('test',user,pass); 
+      
+      //this.$router.push('/home')
+      
 
+    }
+  },
+ }
 </script>
 
 <template>
@@ -15,20 +44,20 @@
         <div class="input-field-item">
           <p>Email</p>
           <div class="input-field">
-            <input type="text" class="" placeholder="Email" />
+            <input type="text" class="" v-model="user" placeholder="Email" />
           </div>
         </div>
         <div class="input-field-item">
           <p>Password</p>
           <div class="d-flex justify-content-between align-items-center input-field">
-            <input type="password" class="" placeholder="******" />
+            <input type="password" class="" v-model="pass" placeholder="******" />
             <i class="ph ph-eye-closed"></i>
           </div>
         </div>
         <div class="d-flex flex-column gap-8">
           <router-link to="/forget-password" class="d-block text-end fw-semibold">Forgot Password?</router-link>
 
-          <router-link to="/home" class="link-button d-block">Sign In</router-link>
+          <router-link to="" class="link-button d-block" @click="signIn(user,pass)">Sign In</router-link>
         </div>
 
         <div class="position-relative continue-with">

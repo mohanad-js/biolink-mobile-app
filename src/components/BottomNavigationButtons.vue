@@ -10,7 +10,7 @@
                 <router-link to="/store" class="flex-center navigation-button">
                     <i class="ph-fill ph ph-shopping-bag link-item "></i>
                 </router-link>
-                <router-link to="/services" class="flex-center navigation-button">
+                <router-link to="/services/services-tab" class="flex-center navigation-button">
                     <i class="ph ph-stethoscope link-item"></i>
                 </router-link>
                 <router-link to="/maintenances" class="flex-center navigation-button"><i
