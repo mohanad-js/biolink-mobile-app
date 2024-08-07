@@ -1050,7 +1050,6 @@ textarea:focus {
 .search-section .search-area .search-box {
   border: 1px solid var(--borderColor);
   border-radius: 8px;
-  color: var(--borderColor);
 }
 .search-section .search-area .search-box:focus-within {
   border: 1px solid var(--p1);
@@ -2328,3 +2327,41 @@ textarea::placeholder {
   right: 0;
   z-index: 9999;
 } /*# sourceMappingURL=style.css.map */
+
+
+.fab-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  user-select: none;
+  position: fixed;
+  bottom: 150px;
+  right: 30px;
+  cursor: pointer;
+}
+.fab-container .fab {
+  position: relative;
+  height: 70px;
+  width: 70px;
+  background-color: var(--p1);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.fab-container .fab .fab-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+.fab-container .fab .fab-content .material-icons {
+  color: white;
+  font-size: 48px;
+}
+
+.pb-200{
+  padding-bottom: 200px;
+}
