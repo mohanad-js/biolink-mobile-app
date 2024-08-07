@@ -21,6 +21,11 @@ const router = createRouter({
           component: () => import('../views/Profile/ProfileSettingsView.vue')
         },
         {
+          path: '/profile/transactions-history',
+          name: 'transactions-history',
+          component: () => import('../views/Profile/TransactionsHistoryView.vue')
+        },
+        {
           path: '/store',
           name: 'store',
           component: () => import('../views/Store/StoreView.vue')

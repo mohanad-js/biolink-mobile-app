@@ -14,27 +14,21 @@ export const useAuthStore = defineStore('auth', () => {
     img: 'https://avatar.iran.liara.run/public/50'
   })
 
-  // function login(email, password) {
-  //   console.log('login', email, password)
-  // }
-    // localStorage.setItem('token', res.token)
+  function login(email, password) {
+    console.log('login', email, password)
+    localStorage.setItem('token',token)
     // localStorage.setItem('currentUser', JSON.stringify(req.user))
     // currentUser.value = res.user
+  }
+    // 
   
 
-  // function logout(){
-  //   console.log('logout')
-  //   // localStorage.removeItem('currentUser')
+  function logout(){
+    console.log('logout')
+    // localStorage.removeItem('currentUser')
     
-  // }
-  // function setToken(token){
-  //   localStorage.setItem('token', token)
-  // }
-  // function getToken() {
-  //   if(localStorage.getItem('token')){
-  //     return localStorage.getItem('token')
-  //   }
-  // }
+  }
+
 
   return { currentUser, logout,login }
 })

@@ -15,15 +15,15 @@ const showLogoutModal = ref(false);
 </script>
 
 <template>
-    <section class="settings-area px-6 pt-6 overflow-auto pb-20">
-        <SubHeader title="Profile Settings" link="/home" />
+    <SubHeader title="Profile Settings" link="/home" />
 
+    <section class="settings-area px-6 pt-6 overflow-auto pb-20">
         <UserCard :user="currentUser" />
         <div class="settings-area pt-8 d-flex flex-column gap-6 ">
             <NavigationButton :to="'/profile/transactions-history'" text="Transactions History" icon="ph-cardholder" />
             <NavigationButton :to="'/profile/order-history'" text="Products Order History" icon="ph-shopping-cart" />
             <NavigationButton :to="'/profile/service-history'" text="Service Order History" icon="ph-stethoscope" />
-            <NavigationButton :to="'/profile/profile/security'" text="Security" icon="ph-shield-check" />
+            <NavigationButton :to="'/profile/profile-security'" text="Security" icon="ph-shield-check" />
             <div @click="showLogoutModal = true"
                 class="logoutModalButton d-flex justify-content-between align-items-center setting-item">
                 <div class="d-flex justify-content-start align-items-center gap-4">
@@ -40,7 +40,8 @@ const showLogoutModal = ref(false);
     </section>
     <BaseAlertModal title="Logout" message="Are you sure you want to log out" v-model:visible="showLogoutModal">
         <template #actions>
-            <button @click="authStore.logout(); showLogoutModal = false">Logout</button>
+            <BaseButton @click="authStore.logout(); showLogoutModal = false" styles="gender-button active"
+                title="Logout" />
         </template>
     </BaseAlertModal>
 </template>

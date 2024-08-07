@@ -2,51 +2,53 @@
 const props = defineProps({
     card: {
         type: Object,
-        required: true
+        required: {
+            header: 'defualt',
+            image: 'https://placehold.co/600x400',
+            description: 'default',
+            icon: 'ph-fill ph-check-circle '
+        }
     },
     styles: {
         type: String,
     },
 })
-console.log(props)
+console.log(props.card)
 </script>
 
 <template>
-    <div class="top-doctor-area ">
+    <div class="top-doctor-area">
         <div class="w-100 base-card p-4 mb-4">
-            <div class="d-flex justify-content-between align-items-start gap-4">
-                <div class="d-flex justify-content-start align-items-start gap-4">
-                    <div class="base-card-img flex-center">
+            <div class="d-flex justify-content-between align-items-start gap-2">
+                <div class="d-flex justify-content-start align-items-center gap-4">
+                    <div v-if="card.image" class="base-card-img flex-center">
                         <img src="@/assets/img/top-doctor-4.png" class="h-100" alt="" />
                     </div>
+                    <div v-if="card.icon" class="base-card-img flex-center ">
+                        <i :class="`${card.icon} fs-1`"></i>
+                    </div>
+
                     <div class="">
-                        <p class="fw-bold name">Dr. Marvin McKinney</p>
-                        <p class="d-inline-flex justify-content-start align-items-center py-2 flex-wrap">
-                            <span class="category">Cardiologist </span>
-                            <i class="ph ph-dot fs-4"></i>
-                            <span class="work-place">Franklin Hospital</span>
+                        <p class="fw-bold name">{{ card.header }}</p>
+                        <p class="d-inline-flex justify-content-start align-items-center pt-2 flex-wrap">
+                            <span class="category">
+                                {{ card.description }}
+                            </span>
                         </p>
-                        <div class="d-flex justify-content-start align-items-center flex-wrap">
-                            <div class="rating">
-                                <i class="ph-fill ph-star"></i>
-                                4.7
-                            </div>
-                            <i class="ph ph-dot fs-2"></i>
-                            <div class="time">
-                                <i class="ph-fill ph-clock"></i>12pm-5pm
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <button class="p-2 flex-center session-button">
-                    <i class="ph ph-video-camera fs-5"></i>
-                </button>
+
+                <div class=" flex-center align-self-start ">
+                    <slot name="corner-badge">
+
+                    </slot>
+                </div>
             </div>
             <div class="d-flex justify-content-between align-items-center pt-4 gap-3 appointment-link-buttons">
-                <a href="./chat-box.html" class="appointment-link d-block w-100">Appointment</a>
-                <button class="appointment-link fill d-block w-100 logoutModalButton">
-                    Cancel
-                </button>
+                <slot name="actions">
+
+                </slot>
+
             </div>
         </div>
     </div>
