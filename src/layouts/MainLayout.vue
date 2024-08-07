@@ -4,8 +4,7 @@ import BottomNavigationButtons from '@/components/BottomNavigationButtons.vue';
 </script>
 
 <template>
-    <main>
-        <RouterView />
-        <BottomNavigationButtons />
-    </main>
+    <RouterView />
+    <BottomNavigationButtons />
+
 </template>

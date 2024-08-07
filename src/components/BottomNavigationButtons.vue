@@ -15,7 +15,7 @@
                 </router-link>
                 <router-link to="/maintenances" class="flex-center navigation-button"><i
                         class="ph ph-screwdriver link-item"></i></router-link>
-                <router-link to="/profile" class="flex-center navigation-button"><i
+                <router-link to="/profile-settings" class="flex-center navigation-button"><i
                         class="ph ph-user link-item"></i></router-link>
             </div>
 

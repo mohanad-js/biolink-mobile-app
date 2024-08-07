@@ -1,34 +1,5 @@
-<script>
- export default {
-  methods: {
-    data() {
-      return {
-        user:'moaid',
-        pass:'1234'
-      }
-    },
-    signIn(user,pass){
-      if(this.user=='moaid' && pass=='1234'){
-        this.$router.push('/home')
-      }else{
-        console.warn("Rong pass");
-      }
-      // app.name=user
-      // app.pass=pass
-      // this.http.post("/login", app).then((res) => {  
-      //   console.log(res)   
-      //   if(res)
-      //   this.$router.push('/home')    
-      //   this.get(this.page);
-      // });
-      //console.log('test',user,pass); 
-      
-      //this.$router.push('/home')
-      
+<script setup>
 
-    }
-  },
- }
 </script>
 
 <template>
@@ -57,7 +28,7 @@
         <div class="d-flex flex-column gap-8">
           <router-link to="/forget-password" class="d-block text-end fw-semibold">Forgot Password?</router-link>
 
-          <router-link to="" class="link-button d-block" @click="signIn(user,pass)">Sign In</router-link>
+          <router-link to="/home" class="link-button d-block">Sign In</router-link>
         </div>
 
         <div class="position-relative continue-with">
@@ -87,12 +58,4 @@
 
 </template>
 
-<style lang="postcss" scoped></style>
-
-
-
-<!-- Js Dependencies -->
-<!-- <script src="@/assets/js/plugins/bootstrap.js"></script>
-    <script src="@/assets/js/main.js"></script>
-    <script src="@/assets/js/service-worker-settings.js"></script>
- -->
+<style scoped></style>

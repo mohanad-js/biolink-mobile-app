@@ -16,9 +16,9 @@ const router = createRouter({
           component: HomeView
         },
         {
-          path: '/profile',
-          name: 'profile',
-          component: () => import('../views/Profile/ProfileView.vue')
+          path: '/profile-settings',
+          name: 'profile-settings',
+          component: () => import('../views/Profile/ProfileSettingsView.vue')
         },
         {
           path: '/store',
@@ -51,8 +51,35 @@ const router = createRouter({
         },
         {
           path: '/maintenances',
-          name: '/maintenances',
-          component: () => import('../views/Maintenance/MaintenanceView.vue')
+          name: 'maintenances',
+          component: () => import('../views/Maintenance/MaintenanceView.vue'),
+          children: [
+            {
+              path:'/maintenances/completed',
+              name: 'completed orders',
+              component: () => import('../views/Maintenance/CompletedMaintenancesView.vue')
+            },
+            {
+              path: '/maintenances/active',
+              name: 'active orders',
+              component: () => import('../views/Maintenance/ActiveMaintenancesOrdersView.vue')
+            },
+
+    
+          ],
+
+        },
+            
+        {
+          path: '/maintenances/order/:id',
+          props: true,
+          name: 'order details',
+          component: () => import('../views/Maintenance/MaintenanceOrderDetails.vue')
+        },
+        {
+          path:'/maintenances/new',
+          name:'new maintenance order',
+          component: ()=> import('../views/Maintenance/NewMaintenanceOrder.vue')
         }
       ]
     },
