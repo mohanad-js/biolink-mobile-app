@@ -1,10 +1,5 @@
 <script setup>
 
-import { useAuthStore } from '@/stores/auth';
-const authStore = useAuthStore()
-
-
-
 </script>
 
 <template>
@@ -20,20 +15,20 @@ const authStore = useAuthStore()
         <div class="input-field-item">
           <p>Email</p>
           <div class="input-field">
-            <input type="text" class="" placeholder="Email" />
+            <input type="text" class="" v-model="user" placeholder="Email" />
           </div>
         </div>
         <div class="input-field-item">
           <p>Password</p>
           <div class="d-flex justify-content-between align-items-center input-field">
-            <input type="password" class="" placeholder="******" />
+            <input type="password" class="" v-model="pass" placeholder="******" />
             <i class="ph ph-eye-closed"></i>
           </div>
         </div>
         <div class="d-flex flex-column gap-8">
           <router-link to="/forget-password" class="d-block text-end fw-semibold">Forgot Password?</router-link>
 
-          <button @click="authStore.login('email', 'password')" class="link-button d-block">Sign In</button>
+          <router-link to="/home" class="link-button d-block">Sign In</router-link>
         </div>
 
         <div class="position-relative continue-with">

@@ -9,11 +9,13 @@ const props = defineProps({
             icon: 'ph-fill ph-check-circle '
         }
     },
+
     styles: {
         type: String,
-    },
+    }
 })
 console.log(props.card)
+
 </script>
 
 <template>
@@ -35,6 +37,7 @@ console.log(props.card)
                                 {{ card.description }}
                             </span>
                         </p>
+
                     </div>
                 </div>
 
@@ -45,96 +48,14 @@ console.log(props.card)
                 </div>
             </div>
             <div class="d-flex justify-content-between align-items-center pt-4 gap-3 appointment-link-buttons">
+
                 <slot name="actions">
 
                 </slot>
+
 
             </div>
         </div>
     </div>
 
 </template>
-
-<style>
-.top-doctor-area .base-card {
-    border-radius: 20px;
-    border: 1px solid var(--borderColor);
-}
-
-.top-doctor-area .base-card.base-card-img {
-    border-radius: 8px;
-    position: relative;
-    background-color: var(--g50);
-    width: 70px;
-    height: 72px;
-}
-
-.top-doctor-area .base-card.base-card-img .active {
-    position: absolute;
-    top: 8px;
-    right: -8px;
-}
-
-@media screen and (max-width: 360px) {
-    .top-doctor-area .base-card.base-card-img {
-        height: 60px;
-    }
-}
-
-.top-doctor-area .base-card.favourite-button {
-    border-radius: 8px;
-    border: 1px solid var(--secodayBg2);
-}
-
-.top-doctor-area .base-card.session-button {
-    border-radius: 8px;
-    background-color: var(--p1);
-    color: var(--white);
-}
-
-
-
-.top-doctor-area .base-card.category {
-    font-size: 14px;
-}
-
-.top-doctor-area .base-card.work-place {
-    font-size: 12px;
-}
-
-.top-doctor-area .base-card.rating {
-    color: var(--n2);
-    font-size: 12px;
-}
-
-.top-doctor-area .base-card.rating i {
-    color: var(--yellow);
-}
-
-.top-doctor-area .base-card.time {
-    font-size: 12px;
-    color: var(--p1);
-}
-
-@media screen and (max-width: 410px) {
-    .top-doctor-area .base-card.appointment-link-buttons {
-        flex-wrap: wrap;
-    }
-}
-
-.top-doctor-area .base-card.appointment-link-buttons .appointment-link {
-    padding: 8px 16px;
-    color: var(--p1);
-    border-radius: 8px;
-    border-top: 1px solid var(--p1);
-    border-right: 1px solid var(--p1);
-    border-bottom: 2px solid var(--p1);
-    border-left: 1px solid var(--p1);
-    text-align: center;
-}
-
-.top-doctor-area .base-card.appointment-link-buttons .appointment-link.fill {
-    background-color: var(--p1);
-    color: var(--white);
-}
-</style>

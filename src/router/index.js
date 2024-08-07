@@ -30,6 +30,7 @@ const router = createRouter({
           name: 'store',
           component: () => import('../views/Store/StoreView.vue')
         },
+    
         {
           path: '/services',
           name: 'services',
@@ -45,6 +46,7 @@ const router = createRouter({
               name: 'booking-services',
               component: () => import('../views/Services/Tabs/BookingServicesTabView.vue')
             },
+           
             {
               path: '/services/archive-services',
               name: 'archive-services',
@@ -106,7 +108,12 @@ const router = createRouter({
       path: '/forget-password"',
       name: '/forget-password"',
       component: () => import('../views/Auth/ForgetPasswordView.vue')
-    }
+    },
+    {
+      path: '/services/services-profile',
+      name: 'profile-services',
+      component: () => import('../views/Services/ServicesProfile.vue')
+    },
   ]
 })
 
