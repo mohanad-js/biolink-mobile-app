@@ -1,4 +1,6 @@
 <script>
+import BaseButton from '@/components/Base/BaseButton.vue';
+
 export default {
     props: {
         visible: {
@@ -27,7 +29,12 @@ export default {
             this.$emit('update:visible', false);
         },
     },
+    components: {
+        BaseButton
+    }
 };
+
+
 </script>
 
 <template>
@@ -43,12 +50,18 @@ export default {
                 </div>
                 <p>{{ message }}</p>
                 <div class="w-100 pt-8 d-flex justify-content-between align-items-center gap-4">
-                    <div class="gender-button" @click="closeModal">
-                        <button>Cancel</button>
+                    <div class="gender-button">
+
+                        <BaseButton  styles="gender-button active" title="close" @click="closeModal" />
                     </div>
-                    <button @click="action.confirm" class="gender-button active" id="logoutButton">
-                        <span>{{ action.label }}</span>
-                    </button>
+                    <slot name="button">
+                        <div class="gender-button active">
+                            
+                            <button @click="action.confirm" id="logoutButton">
+                                <span>{{ action.label }}</span>
+                            </button>
+                        </div>
+                    </slot>
                 </div>
             </div>
         </div>

@@ -19,7 +19,7 @@ console.log(props.user.id)
                 <p class="text-white pt-2 fw-light">+{{ user.mobile }}</p>
             </div>
         </div>
-        <RouterLink :to="`/edit-profile/${user.id}`" class="edit-icon flex-center">
+        <RouterLink :to="`/profile/edit-profile/${user.id}`" class="edit-icon flex-center">
             <i class="ph ph-pencil-simple-line"></i>
         </RouterLink>
     </div>

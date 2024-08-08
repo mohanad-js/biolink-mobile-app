@@ -6,10 +6,20 @@ import { RouterView, useRoute } from 'vue-router';
 import router from '@/router';
 import { useMaintenanceStore } from '@/stores/maintenance';
 import { fetchMaintenanceOrders } from '../../api/maintenanceApiCalls'
+import { useLoading } from 'vue-loading-overlay';
+
+
+const loader = useLoading({
+    opacity: 0.5,
+    color: "#198754",
+})
 
 const { setMaintenanceOrders } = useMaintenanceStore()
-fetchMaintenanceOrders().then(orders=>{
+const _loader = loader.show()
+fetchMaintenanceOrders().then(orders => {
     setMaintenanceOrders(orders)
+}).finally(() => {
+    _loader.hide()
 })
 
 
@@ -44,7 +54,7 @@ router.push({ name: 'active orders' })
         </section>
         <!-- Search Section End -->
         <TabTitle
-            :tabs="[{ title: 'Active Orders', link: '/maintenances/active' }, { title: 'Completed', link: '/maintenances/completed' }]" />
+            :tabs="[{title:'New Orders',link:'/maintenances/new'},{ title: 'Active Orders', link: '/maintenances/active' }, { title: 'Completed', link: '/maintenances/completed' },{title:'Canceled',link:'/maintenances/canceled'}]" />
         <div class="tab-content activeTab" id="upcoming_data">
 
             <RouterView />

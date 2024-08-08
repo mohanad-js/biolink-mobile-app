@@ -1437,9 +1437,9 @@ textarea:focus {
 .gender-button a,
 .gender-button button,
 .gender-button span {
-  border: 1px solid var(--p1);
-  background-color: var(--g50);
-  color: var(--p1);
+  /* border: 1px solid var(--p1); */
+  /* background-color: var(--g50); */
+  /* color: var(--p1); */
   padding: 16px 32px;
   border-radius: 8px;
   width: 100%;
@@ -1448,8 +1448,8 @@ textarea:focus {
 .gender-button.active a,
 .gender-button.active button,
 .gender-button.active span {
-  background-color: var(--p1);
-  color: var(--white);
+  /* background-color: var(--p1); */
+  /* color: var(--white); */
   width: 100%;
 }
 
