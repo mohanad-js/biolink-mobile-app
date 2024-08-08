@@ -14,7 +14,7 @@ const props = defineProps([
         </div>
         <p class="fs-5 fw-bold d-flex justify-content-center align-content-center ">
             <i :class="`ph ph-currency-${currency} fs-5 fw-bold align-self-center`"></i>
-            {{ ` ` + props.price.toFixed(2) }}
+            {{ props.price}}
         </p>
     </div>
 </template>
