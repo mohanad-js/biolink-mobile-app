@@ -22,17 +22,17 @@ const router = createRouter({
         },
         {
           path: '/profile/transactions-history',
-          name: 'transactions-history',
+          name: 'Transactions History',
           component: () => import('../views/Profile/TransactionsHistoryView.vue')
         },
         {
           path: '/profile/edit-profile/:id',
-          name: 'edit-profile',
+          name: 'Edit Profile',
           component: () => import('../views/Profile/EditProfileView.vue')
         },
         {
           path: '/store',
-          name: 'store',
+          name: 'Store',
           component: () => import('../views/Store/StoreView.vue')
         },
     
@@ -43,18 +43,18 @@ const router = createRouter({
           children: [
             {
               path: '/services/services-tab',
-              name: 'services-tab',
+              name: 'Services List',
               component: () => import('../views/Services/Tabs/ServicesTabView.vue')
             },
             {
               path: '/services/booking-services',
-              name: 'booking-services',
+              name: 'Booking services',
               component: () => import('../views/Services/Tabs/BookingServicesTabView.vue')
             },
            
             {
               path: '/services/archive-services',
-              name: 'archive-services',
+              name: 'Archive services',
               component: () => import('../views/Services/Tabs/ArchiveServicesTabView.vue')
             }
           ]

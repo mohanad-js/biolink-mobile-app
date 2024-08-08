@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 
-const props = defineProps(['label']);
+const props = defineProps(['label', 'hint']);
 
 const inputValue = ref('');
 const emit = defineEmits(['update:modelValue']);
@@ -19,7 +19,7 @@ watch(inputValue, (newValue) => {
     <div class="input-field-item">
         <p>{{ label }}</p>
         <div class="input-field">
-            <input v-model="inputValue" @input="emitInputValue" type="text" class="" placeholder="First name">
+            <input v-model="inputValue" @input="emitInputValue" type="text" class="" :placeholder="hint">
         </div>
     </div>
 </template>

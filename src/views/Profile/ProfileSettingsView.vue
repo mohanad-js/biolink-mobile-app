@@ -5,44 +5,53 @@ import NavigationButton from '@/components/Base/NavigationButton.vue';
 import BaseAlertModal from '@/components/Base/BaseAlertModal.vue';
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import BaseButton from '@/components/Base/BaseButton.vue';
 
 const authStore = useAuthStore();
-const { currentUser } = storeToRefs(authStore)
-
+const user = authStore.getCurrentUser();
 const showLogoutModal = ref(false);
+
+onMounted(() => {
+    authStore.getCurrentUser();
+});
 </script>
 
 <template>
-    <SubHeader title="Profile Settings" link="/home" />
+    <main class="pb-200">
+        <SubHeader title="Profile Settings" link="/home" />
 
-    <section class="settings-area px-6 pt-6 overflow-auto pb-20">
-        <UserCard :user="currentUser" />
-        <div class="settings-area pt-8 d-flex flex-column gap-6 ">
-            <NavigationButton :to="'/profile/transactions-history'" text="Transactions History" icon="ph-cardholder" />
-            <NavigationButton :to="'/profile/order-history'" text="Products Order History" icon="ph-shopping-cart" />
-            <NavigationButton :to="'/profile/service-history'" text="Service Order History" icon="ph-stethoscope" />
-            <NavigationButton :to="'/profile/profile-security'" text="Security" icon="ph-shield-check" />
-            <div @click="showLogoutModal = true"
-                class="logoutModalButton d-flex justify-content-between align-items-center setting-item">
-                <div class="d-flex justify-content-start align-items-center gap-4">
-                    <div class="flex-center">
-                        <i class="ph ph-users-three setting-icon logout"></i>
+        <section class="settings-area px-6 pt-6 overflow-auto">
+            <UserCard :user="user" />
+            <div class="settings-area pt-8 d-flex flex-column gap-6 ">
+                <NavigationButton :to="'/profile/transactions-history'" text="Transactions History"
+                    icon="ph-cardholder" />
+                <NavigationButton :to="'/profile/order-history'" text="Products Order History"
+                    icon="ph-shopping-cart" />
+                <NavigationButton :to="'/profile/service-history'" text="Service Order History" icon="ph-stethoscope" />
+                <NavigationButton :to="'/profile/profile-security'" text="Security" icon="ph-shield-check" />
+
+
+                <div @click="showLogoutModal = true"
+                    class="logoutModalButton d-flex justify-content-between align-items-center setting-item">
+                    <div class="d-flex justify-content-start align-items-center gap-4">
+                        <div class="flex-center">
+                            <i class="ph ph-users-three setting-icon logout"></i>
+                        </div>
+                        <p class="fs-5 fw-semibold logout-text">Logout</p>
                     </div>
-                    <p class="fs-5 fw-semibold logout-text">Logout</p>
-                </div>
-                <div class="chevron_icon">
-                    <i class="ph ph-caret-right"></i>
+                    <div class="chevron_icon">
+                        <i class="ph ph-caret-right"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <BaseAlertModal title="Logout" message="Are you sure you want to log out" v-model:visible="showLogoutModal">
-        <template #actions>
+        </section>
+    </main>
+    <BaseAlertModal action title="Logout" message="Are you sure you want to log out" v-model:visible="showLogoutModal">
+        <!-- <template #actions>
             <BaseButton @click="authStore.logout(); showLogoutModal = false" styles="gender-button active"
                 title="Logout" />
-        </template>
+        </template> -->
     </BaseAlertModal>
 </template>
 
