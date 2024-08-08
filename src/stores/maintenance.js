@@ -2,24 +2,21 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 export const useMaintenanceStore = defineStore('maintenance', () => {
-  const maintenanceOrders = ref([
-    {
-      id: 1,
-      status: 'active'
-    },
-    {
-      id: 2,
-      status: 'completed'
-    }
-  ])
+  const maintenanceOrders = ref([])
 
   const getMaintenanceOrders = computed(() => maintenanceOrders.value)
   const completedMaintenanceOrders = computed(() =>
     maintenanceOrders.value.filter((order) => order.status === 'completed')
   )
   const activeMaintenanceOrders = computed(() =>
-    maintenanceOrders.value.filter((order) => order.status !== 'completed')
+    maintenanceOrders.value.filter((order) => order.status !== 'completed' && order.status !== 'new' && order.status !== 'canceled')
   )
+
+  const getNewMaintenanceOrders = computed(()=>
+    maintenanceOrders.value.filter((order)=> order.status == 'new' )
+  )
+
+  const getCanceledMaintenanceOrders = computed(()=> maintenanceOrders.value.filter((order)=> order.status === 'canceled'))
 
   const setMaintenanceOrders = (orders) => {
     maintenanceOrders.value = orders
@@ -34,6 +31,7 @@ export const useMaintenanceStore = defineStore('maintenance', () => {
       (order) => order.id !== id
     )
   }
+  
 
   return {
     maintenanceOrders,
@@ -42,6 +40,8 @@ export const useMaintenanceStore = defineStore('maintenance', () => {
     activeMaintenanceOrders,
     setMaintenanceOrders,
     addMaintenanceOrder,
-    deleteMaintenanceOrder
+    deleteMaintenanceOrder,
+    getNewMaintenanceOrders,
+    getCanceledMaintenanceOrders
   }
 })

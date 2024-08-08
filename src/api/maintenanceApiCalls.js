@@ -15,3 +15,19 @@ export const getMaintenanceOrderDetails = async (id) => {
   const res = await api.get(`/maintenance/${id}`)
   return res.data.data
 }
+
+
+export const updateMaintenanceOrder = async (id, data) => {
+  const res = await api.put(`/maintenance/${id}`, data)
+  return res.data.data
+}
+
+export const cancelMaintenanceOrder = async (id,data) => {
+    const res = await api.put(`/maintenance/update-status/${id}`,data)
+    return res.data.data
+}
+
+export const searchMaintenanceOrders = async (data) => {
+    const res = await api.post('/maintenance/search',data)
+    return res.data.data
+}

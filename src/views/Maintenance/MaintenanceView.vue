@@ -5,8 +5,9 @@ import TabTitle from '@/components/Base/TabTitle.vue';
 import { RouterView, useRoute } from 'vue-router';
 import router from '@/router';
 import { useMaintenanceStore } from '@/stores/maintenance';
-import { fetchMaintenanceOrders } from '../../api/maintenanceApiCalls'
+import { fetchMaintenanceOrders,searchMaintenanceOrders } from '../../api/maintenanceApiCalls'
 import { useLoading } from 'vue-loading-overlay';
+import { ref } from 'vue';
 
 
 const loader = useLoading({
@@ -14,9 +15,12 @@ const loader = useLoading({
     color: "#198754",
 })
 
+const search = ref('')
+
 const { setMaintenanceOrders } = useMaintenanceStore()
 const _loader = loader.show()
 fetchMaintenanceOrders().then(orders => {
+    
     setMaintenanceOrders(orders)
 }).finally(() => {
     _loader.hide()
@@ -24,6 +28,30 @@ fetchMaintenanceOrders().then(orders => {
 
 
 router.push({ name: 'active orders' })
+
+const searchOrders = () => {
+    if(search.value){
+        let _loader = loader.show()
+        searchMaintenanceOrders({search:search.value}).then(orders => {
+            setMaintenanceOrders(orders)
+        }).finally(() => {
+            _loader.hide()
+        })
+    }
+}
+
+const resetSearch = () => {
+    if(search.value){
+
+        search.value = ''
+        let _loader = loader.show()
+        fetchMaintenanceOrders().then(orders => {
+            setMaintenanceOrders(orders)
+        }).finally(() => {
+            _loader.hide()
+        })
+    }
+}
 
 </script>
 
@@ -34,19 +62,22 @@ router.push({ name: 'active orders' })
         <!-- Search Section Start -->
 
 
-        <section class="search-section w-100 px-6 pt-8">
+        <section class="search-section w-100 px-2 pt-8">
             <div class="">
                 <div class="search-area d-flex justify-content-between align-items-center gap-2 w-100">
                     <div class="search-box d-flex justify-content-start align-items-center gap-2 p-3 w-100">
                         <div class="flex-center">
                             <i class="ph ph-magnifying-glass"></i>
                         </div>
-                        <input type="text" placeholder="Find here..." value="Dr. Diane" />
+                        <input type="text" v-model="search" placeholder="Search order"  />
+                        <div class="flex-center" @click="resetSearch">
+                            <i class="ph ph-x"></i>
+                        </div>
                     </div>
 
                     <div class="search-button">
-                        <button class="flex-center">
-                            <i class="ph ph-sliders-horizontal"></i>
+                        <button @click="searchOrders" class="flex-center">
+                            <i class="ph ph-magnifying-glass"></i>
                         </button>
                     </div>
                 </div>
@@ -54,7 +85,7 @@ router.push({ name: 'active orders' })
         </section>
         <!-- Search Section End -->
         <TabTitle
-            :tabs="[{ title: 'Active Orders', link: '/maintenances/active' }, { title: 'Completed', link: '/maintenances/completed' }]" />
+            :tabs="[{title:'New',link:'/maintenances/new'},{ title: 'Active', link: '/maintenances/active' }, { title: 'Completed', link: '/maintenances/completed' },{title:'Canceled',link:'/maintenances/canceled'}]" />
         <div class="tab-content activeTab" id="upcoming_data">
 
             <RouterView />
