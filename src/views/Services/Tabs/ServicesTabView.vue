@@ -1,17 +1,49 @@
-<script setup>
-import BaseCard from '@/components/Base/BaseCard.vue';
-import { ref } from 'vue';
-const services = ref([
-    { name: 'X-ray', center: "Kassala", price:"100", duration:'60 Min'},
-    { name: 'Sound waves', center: "Portsudan", price:"200", duration:'20 Min'},
-    { name: 'X-ray', center: "Qadarif", price:"100", duration:'50 Min' }
-])
+<script>
+import SCard from '@/components/ServiceComponents/ServiceCard.vue';
+import PaymentPriceAction from '@/components/PaymentPriceAction.vue';
+import { getServicesApi } from '../../../api/serviceApiCalls'
+export default{
+    components:{
+        SCard,
+        PaymentPriceAction
+    },
+    data(){
+      return{
+        services:[]
+      }
+    },
+    methods:{
+        getServices() {
+            getServicesApi().then(res=>{
+                this.services = res
+                console.log("test: ",this.services)
+            })
+            
+        }
+  },
+  mounted(){
+    this.getServices()
+  }
+}
 </script>
 
 <template>
     <main>
         <div class="tab-content activeTab" id="upcoming_data">
-            <BaseCard v-for="service in services" :card="service" :key="service" />
+                <SCard v-for="(service, index) in services" :key="index"
+                :card="{name:service.service_name,
+                    center:service.center_name}">
+                  <template #actions>
+                    <PaymentPriceAction :price="service.service_price" currency="dollar">
+                        <template #actions>
+                            <a href="./chat-box.html" class="appointment-link d-block w-100">Appointment</a>
+                        </template>
+                    </PaymentPriceAction>
+                  </template>
+                  <template #corner-badge>
+                    <span class=" p-2 badge bg-secondary">{{ service.duration }}</span>
+                  </template>
+                </SCard>
         </div>
     </main>
 </template>
@@ -20,5 +52,8 @@ const services = ref([
 .router-link-active.activeTab {
     animation: fadeDown 0.5s linear;
 
+}
+.appointment-link {
+    padding: 5px 0px !important;
 }
 </style>
