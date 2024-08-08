@@ -5,7 +5,7 @@ const props = defineProps({
     }
 })
 
-console.log(props.user.id)
+console.log(props.user)
 </script>
 
 <template>

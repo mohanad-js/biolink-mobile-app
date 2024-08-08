@@ -1,5 +1,6 @@
 <script setup>
 import SubHeader from '@/components/SubHeader.vue';
+import { useRouter } from 'vue-router';
 import UserCard from '@/components/ProfileComponents/UserCard.vue';
 import NavigationButton from '@/components/Base/NavigationButton.vue';
 import BaseAlertModal from '@/components/Base/BaseAlertModal.vue';
@@ -8,10 +9,16 @@ import { useAuthStore } from '@/stores/auth';
 import { ref, onMounted } from 'vue';
 import BaseButton from '@/components/Base/BaseButton.vue';
 
+const router = useRouter()
 const authStore = useAuthStore();
 const user = authStore.getCurrentUser();
 const showLogoutModal = ref(false);
 
+const logout = () => {
+    authStore.logout();
+    showLogoutModal.value = false;
+    router.push('/sign-in');
+}
 onMounted(() => {
     authStore.getCurrentUser();
 });
@@ -48,10 +55,12 @@ onMounted(() => {
         </section>
     </main>
     <BaseAlertModal action title="Logout" message="Are you sure you want to log out" v-model:visible="showLogoutModal">
-        <!-- <template #actions>
-            <BaseButton @click="authStore.logout(); showLogoutModal = false" styles="gender-button active"
-                title="Logout" />
-        </template> -->
+        <template #button>
+            <div class="gender-button">
+
+                <BaseButton styles="btn btn-danger" title="Logout" @click="logout" />
+            </div>
+        </template>
     </BaseAlertModal>
 </template>
 
