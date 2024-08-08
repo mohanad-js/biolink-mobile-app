@@ -3,6 +3,7 @@ import { useMaintenanceStore } from '@/stores/maintenance';
 import { storeToRefs } from 'pinia';
 import MaintenanceOrderCard from '@/components/MaintenanceOrderCard.vue';
 import router from '@/router';
+import NoMaintenanceOrders from '@/components/NoMaintenanceOrders.vue';
 const store = useMaintenanceStore()
 
 const {getNewMaintenanceOrders} = storeToRefs(store)
@@ -20,6 +21,8 @@ const {getNewMaintenanceOrders} = storeToRefs(store)
 
 
         <MaintenanceOrderCard v-for="order in getNewMaintenanceOrders" :key="order.id" :order="order" />
+        <NoMaintenanceOrders :orders="getNewMaintenanceOrders" />
+
         
     </main>
 </template>

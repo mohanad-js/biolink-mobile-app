@@ -15,6 +15,7 @@ import BaseAlertModal from '@/components/Base/BaseAlertModal.vue';
 const router = useRouter()
 const route = useRoute()
 const order = ref({})
+const isLoading = ref(false)
 
 const showCancelModal = ref(false)
 
@@ -23,12 +24,55 @@ const loader = useLoading({
     color: "#198754",
 })
 
+const orderPhases = ref([
+    {
+        title: 'New',
+        value: 'new'
+    },
+    {
+        title: 'Canceled',
+        value:'canceled'
+    },
+    {
+        title: 'Accepted',
+        value: 'accepted'
+    },
+    {
+        title: 'Inspection',
+        value: 'under examination'
+    },
+    {
+        title: 'Examined',
+        value: 'examined'
+    },
+    {
+        title: 'Maintenance',
+        value: 'under maintenance'
+    },
+    {
+        title: 'Completed',
+        value: 'completed'
+    }
+])
 const fetchOrder = () => {
     let _loader = loader.show()
+    isLoading.value = true
     getMaintenanceOrderDetails(route.params.id).then((res) => {
         order.value = res
+        if (order.value.status === 'new') {
+            orderPhases.value = orderPhases.value.filter(phase => phase.value !== 'accepted' && phase.value !== 'canceled')
+        } else if(order.value.status == 'canceled'){
+            orderPhases.value = orderPhases.value.filter(phase => phase.value !== 'accepted')
+        }else if(order.value.status === 'accepted'){
+            orderPhases.value = orderPhases.value.filter(phase => phase.value !== 'canceled')
+        }
+        else{
+            orderPhases.value = orderPhases.value.filter(phase => phase.value !== 'new' && phase.value !== 'canceled')
+        }
+
     }).finally(() => {
         _loader.hide()
+        isLoading.value = false
     })
 
 }
@@ -48,6 +92,19 @@ const cancelOrder = () => {
 watch(() => route.params.id, () => { fetchOrder() }, { immediate: true })
 
 const baseUrl = 'http://192.168.1.80:5008'
+
+const getStepperClasses = (phase)=>{
+
+    if(order.value.status === 'canceled' && phase.value === 'canceled'){
+        return 'canceled active '
+    }
+
+    if(order.value.status === phase.value){
+        return 'active'
+    }
+    return ''
+}
+
 </script>
 
 
@@ -57,10 +114,16 @@ const baseUrl = 'http://192.168.1.80:5008'
 
         <!-- basic details -->
 
-        <div class="top-doctor-area mt-5">
+        <div class="top-doctor-area mt-5" v-if="order.id">
+            <div>
+                <ol class="stepper">
+                    <li :class="getStepperClasses(phase)" v-for="phase in orderPhases">{{
+                        phase.title }}</li>
+                </ol>
+            </div>
             <div class="w-100 base-card p-4 mb-4">
-                <h5 class="card-header">Basic Details</h5>
-                <hr />
+                <h5 class="card-header pb-5">Basic Details</h5>
+
                 <div class="d-flex justify-content-between align-items-start gap-4 flex-column">
 
                     <div class="d-flex align-items-end">
@@ -143,13 +206,20 @@ const baseUrl = 'http://192.168.1.80:5008'
                             Completed at <strong>{{ order.maintenance_order_details?.complete_time }}</strong>
                         </div>
                     </div>
-                    <div class="d-flex align-items-end" v-if="order.maintenance_price || order.scan_fees">
+                    <div class="d-flex align-items-end" v-if="order.maintenance_price">
                         <div class="me-3">
                             <i class="ph-bold ph-money"></i>
                         </div>
                         <div>
                             <span>Maintenance Cost <strong>{{ order.maintenance_price }}</strong> </span>
-                            <i class="ph-bold ph-dot-outline ph-bold fs-4"></i>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-end" v-if=" order.scan_fees">
+                        <div class="me-3">
+                            <i class="ph-bold ph-money"></i>
+                        </div>
+                        <div>
                             <span>Scan Fees <strong>{{ order.scan_fees }}</strong></span>
                         </div>
                     </div>
@@ -157,30 +227,9 @@ const baseUrl = 'http://192.168.1.80:5008'
             </div>
 
             <div class="w-100 base-card p-4 mb-4" v-if="order.maintenance_order_details">
-                <h5 class="card-header">Technical Details</h5>
-                <hr />
-                <div v-if="order?.maintenance_order_spare_parts?.length > 0"
-                    class="d-flex justify-content-between align-items-start gap-4 flex-column mt-3">
-                    <p class="fs-5">Spare Parts</p>
-
-                    <div class="d-flex align-items-end" v-for="spare_part in order.maintenance_order_spare_parts">
-
-                        <div class="me-3">
-                            <i class="ph-bold ph-wrench"></i>
-
-                        </div>
-                        <div>
-                            <span>{{ spare_part.spare_part.name }}</span>
-                        </div>
-                        <i class="ph-bold ph-dot-outline ph-bold fs-4 mb-n1"></i>
-                        <div>
-                            <strong>{{ spare_part.qty }} pice(s) </strong>
-                        </div>
-                    </div>
+                <h5 class="card-header pb-5">Technical Details</h5>
 
 
-                </div>
-                <hr>
                 <div class="d-flex justify-content-between align-items-start gap-4 flex-column mt-3">
 
                     <div class="d-flex align-items-end"
@@ -207,6 +256,28 @@ const baseUrl = 'http://192.168.1.80:5008'
 
 
                     </div>
+
+                </div>
+
+                <div v-if="order?.maintenance_order_spare_parts?.length > 0"
+                    class="d-flex justify-content-between align-items-start gap-4 flex-column mt-3">
+                    <h5 class="card-header mt-5 mb-3">Spare Parts</h5>
+
+                    <div class="d-flex align-items-end" v-for="spare_part in order.maintenance_order_spare_parts">
+
+                        <div class="me-3">
+                            <i class="ph-bold ph-wrench"></i>
+
+                        </div>
+                        <div>
+                            <span>{{ spare_part.spare_part.name }}</span>
+                        </div>
+                        <i class="ph-bold ph-dot-outline ph-bold fs-4 mb-n1"></i>
+                        <div>
+                            <strong>{{ spare_part.qty }} pice(s) </strong>
+                        </div>
+                    </div>
+
 
                 </div>
             </div>
@@ -263,6 +334,11 @@ const baseUrl = 'http://192.168.1.80:5008'
                     Update Order
                 </button>
             </div>
+
+        </div>
+
+        <div v-if="!order.id && !isLoading" class="d-flex justify-content-center align-items-center text-center mt-20">
+            <h2>Maintenance Order Not Found</h2>
 
         </div>
 

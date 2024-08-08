@@ -2,16 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 export const useMaintenanceStore = defineStore('maintenance', () => {
-  const maintenanceOrders = ref([
-    {
-      id: 1,
-      status: 'active'
-    },
-    {
-      id: 2,
-      status: 'completed'
-    }
-  ])
+  const maintenanceOrders = ref([])
 
   const getMaintenanceOrders = computed(() => maintenanceOrders.value)
   const completedMaintenanceOrders = computed(() =>

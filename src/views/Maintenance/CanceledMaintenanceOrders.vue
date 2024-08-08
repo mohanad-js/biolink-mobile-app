@@ -3,6 +3,7 @@ import { useMaintenanceStore } from '@/stores/maintenance';
 import { storeToRefs } from 'pinia';
 import MaintenanceOrderCard from '@/components/MaintenanceOrderCard.vue';
 import router from '@/router';
+import NoMaintenanceOrders from '@/components/NoMaintenanceOrders.vue';
 const store = useMaintenanceStore()
 
 
@@ -22,6 +23,8 @@ console.log(getCanceledMaintenanceOrders.value)
 
 
         <MaintenanceOrderCard v-for="order in getCanceledMaintenanceOrders" :key="order.id" :order="order" />
+        <NoMaintenanceOrders :orders="getCanceledMaintenanceOrders" />
+
         
     </main>
 </template>

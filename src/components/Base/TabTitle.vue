@@ -6,7 +6,7 @@ console.log(props.message);
 </script>
 
 <template>
-    <div class="px-6 w-100 appoinment-tab-area">
+    <div class="px-2 w-100 appoinment-tab-area">
         <div class="py-6 w-100">
             <ul class="tab-button d-flex justify-content-around align-items-center w-100">
                 <router-link v-for="tab in tabs" :key="tab" :to="tab.link" id="upcoming" class="tabButton">{{

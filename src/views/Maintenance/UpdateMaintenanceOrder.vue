@@ -8,6 +8,7 @@ import { Form, Field, ErrorMessage , defineRule} from 'vee-validate';
 import { required } from '@vee-validate/rules';
 import { updateMaintenanceOrder } from '@/api/maintenanceApiCalls';
 import { useRouter } from 'vue-router';
+import { baseURL } from '@/api';
 
 
 const router = useRouter()
@@ -37,6 +38,15 @@ const fetchOrder = () => {
     let _loader = loader.show()
     getMaintenanceOrderDetails(route.params.id).then((res) => {
         order.value = res
+        if(order.value.maintenance_order_images){
+            for (let i = 1; i < 5; i++) {
+                if(order.value.maintenance_order_images[`image${i}`]){
+                    imagesPreview.value.push({id:i,src:baseURL + order.value.maintenance_order_images[`image${i}`].replace('./public', '')})
+                }
+                
+            }
+        }
+        console.log(imagesPreview.value)
     }).finally(() => {
         _loader.hide()
     })
@@ -44,6 +54,8 @@ const fetchOrder = () => {
 }
 
 watch(() => route.params.id, () => { fetchOrder() }, { immediate: true })
+
+
 
 const updateOrder = (values) => {
     const formData = new FormData()
@@ -152,7 +164,7 @@ const onFileChange = (e) => {
                     <ErrorMessage name="images" class=" text-danger" />
 
                 </div>
-                    <img v-for="image in imagesPreview" :key="image.id" :src="image.src" width="100" height="auto" />
+                    <img class="me-2" v-for="image in imagesPreview" :key="image.id" :src="image.src" width="100" height="auto" />
             </section>
 
             <section class="search-section w-100 px-6 pt-5">
